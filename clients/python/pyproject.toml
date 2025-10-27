@@ -1,0 +1,83 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "v402-client-python"
+version = "1.0.0"
+description = "Enterprise-grade Python client for v402 multi-chain payment protocol"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+authors = [{name = "v402 Contributors"}]
+keywords = ["v402", "x402", "payment", "blockchain", "multi-chain", "web3"]
+
+dependencies = [
+    "pydantic>=2.5.0",
+    "pydantic-settings>=2.1.0",
+    "httpx>=0.25.0",
+    "eth-account>=0.10.0",
+    "web3>=6.11.0",
+    "aiofiles>=23.2.0",
+    "prometheus-client>=0.19.0",
+    "structlog>=23.2.0",
+    "tenacity>=8.2.0",
+    "cachetools>=5.3.0",
+    "python-dotenv>=1.0.0",
+    "pyyaml>=6.0.1",
+    "orjson>=3.9.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.12.0",
+    "black>=23.12.0",
+    "ruff>=0.1.8",
+    "mypy>=1.7.0",
+    "isort>=5.13.0",
+]
+solana = [
+    "solana>=0.30.0",
+    "solders>=0.18.0",
+]
+all = [
+    "v402-client-python[dev,solana]",
+]
+
+[project.urls]
+Homepage = "https://github.com/v402/client-python"
+Documentation = "https://docs.v402.org/python"
+Repository = "https://github.com/v402/client-python"
+Issues = "https://github.com/v402/client-python/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["v402_client*"]
+
+[tool.black]
+line-length = 100
+target-version = ['py310', 'py311', 'py312']
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = ["E", "F", "I", "N", "W", "B", "C4", "SIM"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=src/v402_client --cov-report=html --cov-report=term"
+
