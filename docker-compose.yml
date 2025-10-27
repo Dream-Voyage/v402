@@ -1,0 +1,263 @@
+version: '3.8'
+
+services:
+  # v402 Facilitator - Core payment processing service
+  facilitator:
+    build:
+      context: ./v402_facilitator
+      dockerfile: Dockerfile
+    container_name: v402_facilitator
+    ports:
+      - "8080:8080"
+      - "9090:9090"  # Metrics endpoint
+    environment:
+      - DATABASE_URL=postgresql://v402:v402@postgres:5432/v402_facilitator
+      - REDIS_URL=redis://redis:6379
+      - LOG_LEVEL=info
+      - METRICS_ENABLED=true
+      - CHAINS=ethereum,base,polygon,solana
+      - ETHEREUM_RPC_URL=https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}
+      - BASE_RPC_URL=https://mainnet.base.org
+      - POLYGON_RPC_URL=https://polygon-rpc.com
+      - SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - v402_network
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: v402_postgres
+    environment:
+      - POSTGRES_USER=v402
+      - POSTGRES_PASSWORD=v402
+      - POSTGRES_DB=v402_facilitator
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./v402_facilitator/migrations:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U v402"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - v402_network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: v402_redis
+    command: redis-server --appendonly yes --requirepass v402
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "auth", "v402", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - v402_network
+
+  # Example Content Provider (Python FastAPI)
+  content_provider_python:
+    build:
+      context: ./examples/python/fastapi_provider
+      dockerfile: Dockerfile
+    container_name: v402_content_provider_python
+    ports:
+      - "8001:8000"
+    environment:
+      - FACILITATOR_URL=http://facilitator:8080
+      - DATABASE_URL=postgresql://v402:v402@postgres:5432/v402_content
+      - CONTENT_BASE_URL=https://example.com/content
+      - PRIVATE_KEY=${CONTENT_PROVIDER_PRIVATE_KEY}
+    depends_on:
+      facilitator:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - v402_network
+
+  # Example Content Provider (Go Gin)
+  content_provider_go:
+    build:
+      context: ./examples/go/gin_provider
+      dockerfile: Dockerfile
+    container_name: v402_content_provider_go
+    ports:
+      - "8002:8080"
+    environment:
+      - FACILITATOR_URL=http://facilitator:8080
+      - REDIS_URL=redis://redis:6379
+      - PRIVATE_KEY=${CONTENT_PROVIDER_PRIVATE_KEY}
+      - LOG_LEVEL=info
+    depends_on:
+      facilitator:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - v402_network
+
+  # Example Frontend Application (Next.js)
+  frontend_nextjs:
+    build:
+      context: ./examples/javascript/nextjs
+      dockerfile: Dockerfile
+      target: production
+    container_name: v402_frontend_nextjs
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_FACILITATOR_URL=http://localhost:8080
+      - NEXT_PUBLIC_CONTENT_PROVIDER_URL=http://localhost:8001
+      - NODE_ENV=production
+    depends_on:
+      - facilitator
+      - content_provider_python
+    restart: unless-stopped
+    networks:
+      - v402_network
+
+  # Monitoring Stack - Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: v402_prometheus
+    ports:
+      - "9091:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    networks:
+      - v402_network
+
+  # Monitoring Stack - Grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: v402_grafana
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=v402admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    networks:
+      - v402_network
+
+  # Load Balancer (Nginx)
+  nginx:
+    image: nginx:alpine
+    container_name: v402_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/sites-available:/etc/nginx/sites-available
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - facilitator
+      - content_provider_python
+      - content_provider_go
+      - frontend_nextjs
+    restart: unless-stopped
+    networks:
+      - v402_network
+
+  # Log Aggregation (ELK Stack)
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
+    container_name: v402_elasticsearch
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    restart: unless-stopped
+    networks:
+      - v402_network
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.11.1
+    container_name: v402_logstash
+    volumes:
+      - ./monitoring/logstash/pipeline:/usr/share/logstash/pipeline
+    ports:
+      - "5044:5044"
+      - "9600:9600"
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
+    networks:
+      - v402_network
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.1
+    container_name: v402_kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
+    networks:
+      - v402_network
+
+# Volumes for persistent data
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+  elasticsearch_data:
+    driver: local
+
+# Networks
+networks:
+  v402_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
