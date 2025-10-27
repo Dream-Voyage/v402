@@ -14,25 +14,25 @@ v402 is built on the **x402 protocol** and extends it with multi-language SDK su
 ┌────────────────────────────────────────────────────────────┐
 │                    v402 Ecosystem                          │
 │      Multi-Chain Framework on x402 Protocol                │
-│                                                             │
-│  ┌─────────────────┐              ┌──────────────────┐    │
-│  │ Index Clients   │              │ Content Provider │    │
-│  │ (AI/Crawlers)   │              │  (UGC Websites)  │    │
-│  │                 │              │                  │    │
-│  │ • Python SDK    │◄─X-PAYMENT──┤ • JavaScript/TS  │    │
-│  │ • Go SDK        │              │ • React Component│    │
-│  │ • Java SDK      │  402 Resp──►│ • Vue Plugin     │    │
-│  │ • Rust SDK      │              │ • Web Component  │    │
-│  └────────┬────────┘              └─────────┬────────┘    │
-│           │                                 │             │
-│           │         v402_facilitator        │             │
-│           │    (x402 Protocol Service)      │             │
-│           └────────────┬────────────────────┘             │
-│                        │                                  │
-│              Multi-Chain Support                          │
-│   ┌─────────┬──────────┼──────────┬──────────┐           │
-│   ▼         ▼          ▼          ▼          ▼           │
-│  EVM     Solana      BSC      Polygon    Arbitrum        │
+│                                                            │
+│  ┌─────────────────┐              ┌──────────────────┐     │
+│  │ Index Clients   │              │ Content Provider │     │
+│  │ (AI/Crawlers)   │              │  (UGC Websites)  │     │
+│  │                 │              │                  │     │
+│  │ • Python SDK    │◄─X-PAYMENT── ┤ • JavaScript/TS  │     │
+│  │ • Go SDK        │              │ • React Component│     │
+│  │ • Java SDK      │  402 Resp──► │ • Vue Plugin     │     │
+│  │ • Rust SDK      │              │ • Web Component  │     │
+│  └────────┬────────┘              └─────────┬────────┘     │
+│           │                                 │              │
+│           │         v402_facilitator        │              │
+│           │    (x402 Protocol Service)      │              │
+│           └────────────┬────────────────────┘              │
+│                        │                                   │
+│              Multi-Chain Support                           │
+│   ┌─────────┬──────────┼──────────┬──────────┐             │
+│   ▼         ▼          ▼          ▼          ▼             │
+│  EVM     Solana      BSC      Polygon    Arbitrum          │
 └────────────────────────────────────────────────────────────┘
 ```
 
@@ -66,27 +66,27 @@ Payment client SDKs for AI/crawler platforms in multiple languages:
 - Tokio async runtime
 - Type-safe blockchain interactions
 
-### 2. v402_content_provider (JavaScript/TypeScript Components)
+### 2. v402_providers (JavaScript/TypeScript Components)
 
-Embeddable payment components for content creators:
+Enterprise-grade SDK for content creators and UGC platforms:
 
-#### 📦 [JavaScript Core](./providers/javascript/)
+#### 📦 [Core SDK](./v402_providers/)
 - Framework-agnostic core library
-- Web Component implementation
-- Payment button with customizable UI
-- Revenue analytics dashboard
+- Comprehensive API client for V402 facilitator
+- Product management, analytics, and revenue tracking
+- Advanced caching, retry logic, and monitoring
 
-#### ⚛️ [React Component](./providers/react/)
-- Ready-to-use React hooks
-- `<V402PaymentGate>` component
+#### ⚛️ [React Integration](./v402_providers/src/integrations/react/)
+- React hooks (`useV402Provider`, `useProducts`, `usePayments`)
+- Pre-built React components (`<V402PaymentButton>`, `<V402ProductCard>`)
 - TypeScript definitions
-- Next.js integration
+- Next.js integration support
 
-#### 💚 [Vue Plugin](./providers/vue/)
-- Vue 3 Composition API
-- `v-v402-payment` directive
-- Nuxt.js module
-- Pinia state management
+#### 💚 [Vue Integration](./v402_providers/src/integrations/vue/)
+- Vue 3 Composition API composables
+- Vue components with TypeScript
+- Nuxt.js module support
+- Pinia state management integration
 
 ### 3. v402_facilitator (Backend Service)
 
@@ -117,17 +117,17 @@ mvn install com.v402:v402-client-java
 cargo add v402-client
 ```
 
-### Provider Components
+### Provider SDK
 
 ```bash
-# JavaScript/TypeScript
-npm install @v402/provider
+# JavaScript/TypeScript Core + Framework Integrations
+npm install @v402/providers
 
+# Or install specific framework integration
 # React
-npm install @v402/provider-react
-
+npm install @v402/providers react
 # Vue
-npm install @v402/provider-vue
+npm install @v402/providers vue
 ```
 
 ### Facilitator
@@ -239,7 +239,7 @@ v402 supports multiple blockchain networks:
 - [Go SDK Documentation](./clients/go/README.md)
 - [Java SDK Documentation](./clients/java/README.md)
 - [Rust SDK Documentation](./clients/rust/README.md)
-- [JavaScript Provider Documentation](./providers/javascript/README.md)
+- [JavaScript Provider SDK Documentation](./v402_providers/README.md)
 
 ## 🎓 Examples
 
