@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "v402"
+version = "0.1.0"
+description = "A framework for agents ads based on the x402 protocol"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+keywords = ["x402", "payment", "blockchain", "ai", "content", "monetization"]
+authors = [
+    {name = "v402 Contributors"}
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "pydantic>=2.0.0",
+    "httpx>=0.24.0",
+    "eth-account>=0.9.0",
+    "web3>=6.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/v402"
+Documentation = "https://github.com/yourusername/v402#readme"
+Repository = "https://github.com/yourusername/v402"
+Issues = "https://github.com/yourusername/v402/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["v402_*"]
+
+[tool.black]
+line-length = 100
+target-version = ['py310', 'py311', 'py312']
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
