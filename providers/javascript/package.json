@@ -1,0 +1,171 @@
+{
+  "name": "@v402/provider",
+  "version": "1.0.0",
+  "description": "JavaScript/TypeScript provider components for v402 payment integration",
+  "keywords": [
+    "v402",
+    "payment",
+    "micropayment",
+    "blockchain",
+    "web3",
+    "react",
+    "vue",
+    "web-components",
+    "typescript"
+  ],
+  "author": "v402 Team <team@v402.network>",
+  "license": "MIT",
+  "homepage": "https://github.com/v402/provider-js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/v402/provider-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/v402/provider-js/issues"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./react": {
+      "import": "./dist/react.esm.js",
+      "require": "./dist/react.js",
+      "types": "./dist/react.d.ts"
+    },
+    "./vue": {
+      "import": "./dist/vue.esm.js",
+      "require": "./dist/vue.js",
+      "types": "./dist/vue.d.ts"
+    },
+    "./web-components": {
+      "import": "./dist/web-components.esm.js",
+      "require": "./dist/web-components.js",
+      "types": "./dist/web-components.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:watch": "vite build --watch",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint src --ext .ts,.tsx,.js,.jsx",
+    "lint:fix": "eslint src --ext .ts,.tsx,.js,.jsx --fix",
+    "format": "prettier --write src/**/*.{ts,tsx,js,jsx,css,scss,md}",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "size": "size-limit",
+    "release": "np"
+  },
+  "dependencies": {
+    "ethers": "^6.8.1",
+    "web3": "^4.3.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.6.3",
+    "@storybook/addon-interactions": "^7.6.3",
+    "@storybook/addon-links": "^7.6.3",
+    "@storybook/blocks": "^7.6.3",
+    "@storybook/react": "^7.6.3",
+    "@storybook/react-vite": "^7.6.3",
+    "@storybook/testing-library": "^0.2.2",
+    "@storybook/vue3": "^7.6.3",
+    "@storybook/vue3-vite": "^7.6.3",
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.5.1",
+    "@testing-library/vue": "^8.0.1",
+    "@types/node": "^20.10.3",
+    "@types/react": "^18.2.42",
+    "@types/react-dom": "^18.2.17",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
+    "@vitejs/plugin-react": "^4.2.0",
+    "@vitejs/plugin-vue": "^4.5.2",
+    "@vitest/coverage-c8": "^0.33.0",
+    "@vitest/ui": "^1.0.4",
+    "@vue/compiler-sfc": "^3.3.9",
+    "@vue/test-utils": "^2.4.2",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.54.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-storybook": "^0.6.15",
+    "eslint-plugin-vue": "^9.18.1",
+    "happy-dom": "^12.10.3",
+    "lit": "^3.1.0",
+    "np": "^9.2.0",
+    "postcss": "^8.4.32",
+    "prettier": "^3.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rollup-plugin-visualizer": "^5.11.0",
+    "sass": "^1.69.5",
+    "size-limit": "^11.0.1",
+    "storybook": "^7.6.3",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^5.3.2",
+    "vite": "^5.0.6",
+    "vite-plugin-dts": "^3.6.4",
+    "vitest": "^1.0.4",
+    "vue": "^3.3.9"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "vue": "^3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    }
+  },
+  "size-limit": [
+    {
+      "path": "dist/index.js",
+      "limit": "50 KB"
+    },
+    {
+      "path": "dist/react.js",
+      "limit": "30 KB"
+    },
+    {
+      "path": "dist/vue.js",
+      "limit": "30 KB"
+    },
+    {
+      "path": "dist/web-components.js",
+      "limit": "40 KB"
+    }
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
