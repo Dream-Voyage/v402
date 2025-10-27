@@ -66,6 +66,13 @@ Payment client SDKs for AI/crawler platforms in multiple languages:
 - Tokio async runtime
 - Type-safe blockchain interactions
 
+#### 🌐 [HTTP API](./API_DOCUMENTATION.md)
+- **Direct REST API integration** - No SDK required
+- Use your blockchain **public key** as credentials
+- Pay with **x402 payment tokens** on-chain for each request
+- All transactions recorded on-chain for verifiable accounting
+- Perfect for custom integrations, mobile apps, or any programming language
+
 ### 2. v402_providers (JavaScript/TypeScript Components)
 
 Enterprise-grade SDK for content creators and UGC platforms:
@@ -228,18 +235,26 @@ v402 supports multiple blockchain networks:
 
 ## 📚 Documentation
 
-- [Architecture](./ARCHITECTURE.md)
-- [Deployment Guide](./DEPLOYMENT.md)
-- [API Reference](./docs/API.md)
-- [Multi-Chain Guide](./docs/MULTI_CHAIN.md)
-- [Examples](./examples/)
+### Core Documentation
+- **[API Documentation](./API_DOCUMENTATION.md)** - Complete HTTP API reference for v402 facilitator
+- [Architecture](./ARCHITECTURE.md) - System architecture and design
+- [Deployment Guide](./DEPLOYMENT.md) - Production deployment instructions
+- [Examples](./examples/) - Comprehensive examples and tutorials
 
-### Language-Specific Docs
-- [Python SDK Documentation](./clients/python/README.md)
-- [Go SDK Documentation](./clients/go/README.md)
-- [Java SDK Documentation](./clients/java/README.md)
-- [Rust SDK Documentation](./clients/rust/README.md)
-- [JavaScript Provider SDK Documentation](./v402_providers/README.md)
+### Client SDKs
+v402 provides multiple client integration options - choose what works best for you:
+
+#### SDKs (Recommended for Most Use Cases)
+- [Python SDK](./clients/python/README.md) - Async Python client
+- [Go SDK](./clients/go/README.md) - High-performance Go client  
+- [Java SDK](./clients/java/README.md) - Enterprise Java client
+- [Rust SDK](./clients/rust/README.md) - Memory-safe Rust client
+
+#### HTTP API (For Custom Integrations)
+See [Complete API Documentation](./API_DOCUMENTATION.md) for direct REST API access without SDKs
+
+#### Provider SDK
+- [JavaScript/TypeScript Provider SDK](./v402_providers/README.md) - For content creators
 
 ## 🎓 Examples
 

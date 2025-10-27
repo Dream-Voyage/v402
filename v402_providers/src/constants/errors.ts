@@ -1,0 +1,468 @@
+/**
+ * V402 Providers SDK - Error Constants
+ * 
+ * This file contains all error-related constants including error codes,
+ * error messages, error types, and error handling configurations.
+ * 
+ * @author V402 Team
+ * @version 1.0.0
+ * @since 2024-01-01
+ */
+
+/**
+ * Error codes for different error types
+ */
+export const ERROR_CODES = {
+  // General errors
+  UNKNOWN_ERROR: 'V402_001',
+  INTERNAL_ERROR: 'V402_002',
+  NOT_IMPLEMENTED: 'V402_003',
+  SERVICE_UNAVAILABLE: 'V402_004',
+  
+  // Validation errors
+  VALIDATION_ERROR: 'V402_100',
+  INVALID_INPUT: 'V402_101',
+  INVALID_PRODUCT_ID: 'V402_102',
+  INVALID_PAYMENT_ID: 'V402_103',
+  INVALID_USER_ID: 'V402_104',
+  INVALID_PROVIDER_ID: 'V402_105',
+  INVALID_AMOUNT: 'V402_106',
+  INVALID_CURRENCY: 'V402_107',
+  INVALID_BLOCKCHAIN: 'V402_108',
+  INVALID_ADDRESS: 'V402_109',
+  INVALID_SIGNATURE: 'V402_110',
+  INVALID_CONFIGURATION: 'V402_111',
+  MISSING_REQUIRED_FIELD: 'V402_112',
+  INVALID_FIELD_VALUE: 'V402_113',
+  FIELD_TOO_LONG: 'V402_114',
+  FIELD_TOO_SHORT: 'V402_115',
+  INVALID_FORMAT: 'V402_116',
+  INVALID_RANGE: 'V402_117',
+  INVALID_DATE: 'V402_118',
+  INVALID_ENUM: 'V402_119',
+  
+  // Authentication errors
+  AUTHENTICATION_ERROR: 'V402_200',
+  UNAUTHORIZED: 'V402_201',
+  INVALID_API_KEY: 'V402_202',
+  EXPIRED_API_KEY: 'V402_203',
+  REVOKED_API_KEY: 'V402_204',
+  MISSING_API_KEY: 'V402_205',
+  INVALID_CREDENTIALS: 'V402_206',
+  TOKEN_EXPIRED: 'V402_207',
+  TOKEN_INVALID: 'V402_208',
+  REFRESH_TOKEN_EXPIRED: 'V402_209',
+  SESSION_EXPIRED: 'V402_210',
+  ACCOUNT_LOCKED: 'V402_211',
+  ACCOUNT_SUSPENDED: 'V402_212',
+  TWO_FACTOR_REQUIRED: 'V402_213',
+  INVALID_TWO_FACTOR: 'V402_214',
+  
+  // Authorization errors
+  AUTHORIZATION_ERROR: 'V402_300',
+  FORBIDDEN: 'V402_301',
+  INSUFFICIENT_PERMISSIONS: 'V402_302',
+  ROLE_REQUIRED: 'V402_303',
+  SCOPE_REQUIRED: 'V402_304',
+  RESOURCE_ACCESS_DENIED: 'V402_305',
+  OPERATION_NOT_ALLOWED: 'V402_306',
+  
+  // Resource errors
+  NOT_FOUND: 'V402_400',
+  PRODUCT_NOT_FOUND: 'V402_401',
+  PAYMENT_NOT_FOUND: 'V402_402',
+  USER_NOT_FOUND: 'V402_403',
+  PROVIDER_NOT_FOUND: 'V402_404',
+  CLIENT_NOT_FOUND: 'V402_405',
+  TRANSACTION_NOT_FOUND: 'V402_406',
+  INVOICE_NOT_FOUND: 'V402_407',
+  WEBHOOK_NOT_FOUND: 'V402_408',
+  RESOURCE_ALREADY_EXISTS: 'V402_409',
+  DUPLICATE_RESOURCE: 'V402_410',
+  RESOURCE_CONFLICT: 'V402_411',
+  
+  // Payment errors
+  PAYMENT_ERROR: 'V402_500',
+  PAYMENT_FAILED: 'V402_501',
+  PAYMENT_CANCELLED: 'V402_502',
+  PAYMENT_REJECTED: 'V402_503',
+  PAYMENT_EXPIRED: 'V402_504',
+  PAYMENT_PENDING: 'V402_505',
+  PAYMENT_AMOUNT_MISMATCH: 'V402_506',
+  PAYMENT_METHOD_NOT_SUPPORTED: 'V402_507',
+  PAYMENT_METHOD_INVALID: 'V402_508',
+  PAYMENT_METHOD_DECLINED: 'V402_509',
+  INSUFFICIENT_FUNDS: 'V402_510',
+  PAYMENT_ALREADY_PROCESSED: 'V402_511',
+  PAYMENT_NOT_ELIGIBLE_FOR_REFUND: 'V402_512',
+  REFUND_FAILED: 'V402_513',
+  REFUND_NOT_ALLOWED: 'V402_514',
+  
+  // Blockchain errors
+  BLOCKCHAIN_ERROR: 'V402_600',
+  TRANSACTION_FAILED: 'V402_601',
+  TRANSACTION_REVERTED: 'V402_602',
+  TRANSACTION_NOT_FOUND: 'V402_603',
+  TRANSACTION_PENDING: 'V402_604',
+  TRANSACTION_TIMEOUT: 'V402_605',
+  INSUFFICIENT_GAS: 'V402_606',
+  GAS_PRICE_TOO_LOW: 'V402_607',
+  GAS_LIMIT_EXCEEDED: 'V402_608',
+  NONCE_TOO_LOW: 'V402_609',
+  NONCE_TOO_HIGH: 'V402_610',
+  CHAIN_ID_MISMATCH: 'V402_611',
+  NETWORK_NOT_SUPPORTED: 'V402_612',
+  CONTRACT_ERROR: 'V402_613',
+  INVALID_SIGNATURE: 'V402_614',
+  WALLET_NOT_CONNECTED: 'V402_615',
+  WALLET_CHAIN_MISMATCH: 'V402_616',
+  WALLET_REJECTED: 'V402_617',
+  RPC_ERROR: 'V402_618',
+  BLOCK_NOT_FOUND: 'V402_619',
+  
+  // Network errors
+  NETWORK_ERROR: 'V402_700',
+  CONNECTION_ERROR: 'V402_701',
+  TIMEOUT: 'V402_702',
+  REQUEST_TIMEOUT: 'V402_703',
+  RESPONSE_TIMEOUT: 'V402_704',
+  DNS_ERROR: 'V402_705',
+  SSL_ERROR: 'V402_706',
+  CERTIFICATE_ERROR: 'V402_707',
+  CONNECTION_REFUSED: 'V402_708',
+  CONNECTION_RESET: 'V402_709',
+  NO_INTERNET: 'V402_710',
+  RATE_LIMIT_EXCEEDED: 'V402_711',
+  TOO_MANY_REQUESTS: 'V402_712',
+  
+  // Rate limiting
+  RATE_LIMIT_ERROR: 'V402_800',
+  RATE_LIMIT_EXCEEDED: 'V402_801',
+  RATE_LIMIT_QUOTA_EXCEEDED: 'V402_802',
+  RATE_LIMIT_RESET_REQUIRED: 'V402_803',
+  
+  // Circuit breaker
+  CIRCUIT_BREAKER_ERROR: 'V402_900',
+  CIRCUIT_BREAKER_OPEN: 'V402_901',
+  CIRCUIT_BREAKER_HALF_OPEN: 'V402_902',
+  CIRCUIT_BREAKER_FUSED: 'V402_903',
+  
+  // Cache errors
+  CACHE_ERROR: 'V402_1000',
+  CACHE_MISS: 'V402_1001',
+  CACHE_EXPIRED: 'V402_1002',
+  CACHE_LOCKED: 'V402_1003',
+  CACHE_OVERFLOW: 'V402_1004',
+  
+  // Configuration errors
+  CONFIGURATION_ERROR: 'V402_1100',
+  INVALID_CONFIGURATION: 'V402_1101',
+  MISSING_CONFIGURATION: 'V402_1102',
+  INVALID_ENVIRONMENT: 'V402_1103',
+  SECRET_MISSING: 'V402_1104',
+  
+  // Data errors
+  DATA_ERROR: 'V402_1200',
+  DATA_NOT_FOUND: 'V402_1201',
+  DATA_CORRUPTED: 'V402_1202',
+  DATA_MIGRATION_REQUIRED: 'V402_1203',
+  DATA_CONSTRAINT_VIOLATION: 'V402_1204',
+  
+  // External service errors
+  EXTERNAL_SERVICE_ERROR: 'V402_1300',
+  THIRD_PARTY_ERROR: 'V402_1301',
+  API_ERROR: 'V402_1302',
+  SERVICE_DOWN: 'V402_1303',
+  SERVICE_TIMEOUT: 'V402_1304',
+  WEBHOOK_ERROR: 'V402_1305',
+  
+  // Business logic errors
+  BUSINESS_LOGIC_ERROR: 'V402_1400',
+  BUSINESS_RULE_VIOLATION: 'V402_1401',
+  INVALID_OPERATION: 'V402_1402',
+  OPERATION_NOT_ALLOWED: 'V402_1403',
+  STATE_INVALID: 'V402_1404',
+  TRANSITION_INVALID: 'V402_1405',
+  
+  // Fraud and security errors
+  SECURITY_ERROR: 'V402_1500',
+  FRAUD_DETECTED: 'V402_1501',
+  SUSPICIOUS_ACTIVITY: 'V402_1502',
+  IP_BLOCKED: 'V402_1503',
+  ACCOUNT_HACKED: 'V402_1504',
+  PHISHING_DETECTED: 'V402_1505',
+  MALWARE_DETECTED: 'V402_1506',
+  CSRF_ERROR: 'V402_1507',
+  XSS_ERROR: 'V402_1508',
+  SQL_INJECTION_ERROR: 'V402_1509',
+  
+  // Compliance errors
+  COMPLIANCE_ERROR: 'V402_1600',
+  KYC_REQUIRED: 'V402_1601',
+  AML_CHECK_FAILED: 'V402_1602',
+  SANCTIONS_CHECK_FAILED: 'V402_1603',
+  GDPR_VIOLATION: 'V402_1604',
+  REGULATORY_VIOLATION: 'V402_1605',
+  
+  // Analytics errors
+  ANALYTICS_ERROR: 'V402_1700',
+  INVALID_METRIC: 'V402_1701',
+  INVALID_DIMENSION: 'V402_1702',
+  INVALID_DATE_RANGE: 'V402_1703',
+  QUERY_INVALID: 'V402_1704',
+  REPORT_GENERATION_FAILED: 'V402_1705',
+  
+  // File errors
+  FILE_ERROR: 'V402_1800',
+  FILE_NOT_FOUND: 'V402_1801',
+  FILE_TOO_LARGE: 'V402_1802',
+  INVALID_FILE_TYPE: 'V402_1803',
+  UPLOAD_FAILED: 'V402_1804',
+  DOWNLOAD_FAILED: 'V402_1805',
+  FILE_CORRUPTED: 'V402_1806',
+  
+  // Provider errors
+  PROVIDER_ERROR: 'V402_1900',
+  PROVIDER_NOT_CONFIGURED: 'V402_1901',
+  PROVIDER_CAPACITY_EXCEEDED: 'V402_1902',
+  PROVIDER_MISCONFIGURED: 'V402_1903',
+} as const;
+
+/**
+ * Error messages for user-friendly display
+ */
+export const ERROR_MESSAGES: Record<string, string> = {
+  [ERROR_CODES.UNKNOWN_ERROR]: 'An unknown error occurred',
+  [ERROR_CODES.INTERNAL_ERROR]: 'An internal error occurred',
+  [ERROR_CODES.NOT_IMPLEMENTED]: 'This feature is not yet implemented',
+  [ERROR_CODES.SERVICE_UNAVAILABLE]: 'Service is temporarily unavailable',
+  
+  [ERROR_CODES.VALIDATION_ERROR]: 'Validation failed',
+  [ERROR_CODES.INVALID_INPUT]: 'Invalid input provided',
+  [ERROR_CODES.INVALID_PRODUCT_ID]: 'Invalid product ID',
+  [ERROR_CODES.INVALID_PAYMENT_ID]: 'Invalid payment ID',
+  [ERROR_CODES.INVALID_USER_ID]: 'Invalid user ID',
+  [ERROR_CODES.INVALID_PROVIDER_ID]: 'Invalid provider ID',
+  [ERROR_CODES.INVALID_AMOUNT]: 'Invalid amount specified',
+  [ERROR_CODES.INVALID_CURRENCY]: 'Invalid currency code',
+  [ERROR_CODES.INVALID_BLOCKCHAIN]: 'Invalid blockchain network',
+  [ERROR_CODES.INVALID_ADDRESS]: 'Invalid blockchain address',
+  [ERROR_CODES.INVALID_SIGNATURE]: 'Invalid cryptographic signature',
+  [ERROR_CODES.INVALID_CONFIGURATION]: 'Invalid configuration',
+  [ERROR_CODES.MISSING_REQUIRED_FIELD]: 'Required field is missing',
+  [ERROR_CODES.INVALID_FIELD_VALUE]: 'Field value is invalid',
+  [ERROR_CODES.FIELD_TOO_LONG]: 'Field value is too long',
+  [ERROR_CODES.FIELD_TOO_SHORT]: 'Field value is too short',
+  [ERROR_CODES.INVALID_FORMAT]: 'Invalid format',
+  [ERROR_CODES.INVALID_RANGE]: 'Value is out of valid range',
+  [ERROR_CODES.INVALID_DATE]: 'Invalid date format',
+  [ERROR_CODES.INVALID_ENUM]: 'Invalid enum value',
+  
+  [ERROR_CODES.AUTHENTICATION_ERROR]: 'Authentication failed',
+  [ERROR_CODES.UNAUTHORIZED]: 'Unauthorized access',
+  [ERROR_CODES.INVALID_API_KEY]: 'Invalid API key',
+  [ERROR_CODES.EXPIRED_API_KEY]: 'API key has expired',
+  [ERROR_CODES.REVOKED_API_KEY]: 'API key has been revoked',
+  [ERROR_CODES.MISSING_API_KEY]: 'API key is missing',
+  [ERROR_CODES.INVALID_CREDENTIALS]: 'Invalid credentials',
+  [ERROR_CODES.TOKEN_EXPIRED]: 'Authentication token has expired',
+  [ERROR_CODES.TOKEN_INVALID]: 'Invalid authentication token',
+  [ERROR_CODES.SESSION_EXPIRED]: 'Session has expired',
+  [ERROR_CODES.ACCOUNT_LOCKED]: 'Account is locked',
+  [ERROR_CODES.ACCOUNT_SUSPENDED]: 'Account is suspended',
+  [ERROR_CODES.TWO_FACTOR_REQUIRED]: 'Two-factor authentication required',
+  
+  [ERROR_CODES.AUTHORIZATION_ERROR]: 'Authorization failed',
+  [ERROR_CODES.FORBIDDEN]: 'Access forbidden',
+  [ERROR_CODES.INSUFFICIENT_PERMISSIONS]: 'Insufficient permissions',
+  [ERROR_CODES.ROLE_REQUIRED]: 'Required role is missing',
+  [ERROR_CODES.SCOPE_REQUIRED]: 'Required scope is missing',
+  [ERROR_CODES.RESOURCE_ACCESS_DENIED]: 'Access to resource denied',
+  [ERROR_CODES.OPERATION_NOT_ALLOWED]: 'Operation not allowed',
+  
+  [ERROR_CODES.NOT_FOUND]: 'Resource not found',
+  [ERROR_CODES.PRODUCT_NOT_FOUND]: 'Product not found',
+  [ERROR_CODES.PAYMENT_NOT_FOUND]: 'Payment not found',
+  [ERROR_CODES.USER_NOT_FOUND]: 'User not found',
+  [ERROR_CODES.PROVIDER_NOT_FOUND]: 'Provider not found',
+  [ERROR_CODES.CLIENT_NOT_FOUND]: 'Client not found',
+  [ERROR_CODES.TRANSACTION_NOT_FOUND]: 'Transaction not found',
+  [ERROR_CODES.INVOICE_NOT_FOUND]: 'Invoice not found',
+  [ERROR_CODES.WEBHOOK_NOT_FOUND]: 'Webhook not found',
+  [ERROR_CODES.RESOURCE_ALREADY_EXISTS]: 'Resource already exists',
+  [ERROR_CODES.DUPLICATE_RESOURCE]: 'Duplicate resource',
+  [ERROR_CODES.RESOURCE_CONFLICT]: 'Resource conflict',
+  
+  [ERROR_CODES.PAYMENT_ERROR]: 'Payment error occurred',
+  [ERROR_CODES.PAYMENT_FAILED]: 'Payment failed',
+  [ERROR_CODES.PAYMENT_CANCELLED]: 'Payment was cancelled',
+  [ERROR_CODES.PAYMENT_REJECTED]: 'Payment was rejected',
+  [ERROR_CODES.PAYMENT_EXPIRED]: 'Payment has expired',
+  [ERROR_CODES.PAYMENT_PENDING]: 'Payment is pending',
+  [ERROR_CODES.PAYMENT_AMOUNT_MISMATCH]: 'Payment amount mismatch',
+  [ERROR_CODES.PAYMENT_METHOD_NOT_SUPPORTED]: 'Payment method not supported',
+  [ERROR_CODES.PAYMENT_METHOD_INVALID]: 'Invalid payment method',
+  [ERROR_CODES.PAYMENT_METHOD_DECLINED]: 'Payment method declined',
+  [ERROR_CODES.INSUFFICIENT_FUNDS]: 'Insufficient funds',
+  [ERROR_CODES.PAYMENT_ALREADY_PROCESSED]: 'Payment already processed',
+  [ERROR_CODES.PAYMENT_NOT_ELIGIBLE_FOR_REFUND]: 'Payment not eligible for refund',
+  [ERROR_CODES.REFUND_FAILED]: 'Refund failed',
+  [ERROR_CODES.REFUND_NOT_ALLOWED]: 'Refund not allowed',
+  
+  [ERROR_CODES.BLOCKCHAIN_ERROR]: 'Blockchain error occurred',
+  [ERROR_CODES.TRANSACTION_FAILED]: 'Transaction failed',
+  [ERROR_CODES.TRANSACTION_REVERTED]: 'Transaction was reverted',
+  [ERROR_CODES.TRANSACTION_NOT_FOUND]: 'Transaction not found',
+  [ERROR_CODES.TRANSACTION_PENDING]: 'Transaction is pending',
+  [ERROR_CODES.TRANSACTION_TIMEOUT]: 'Transaction timeout',
+  [ERROR_CODES.INSUFFICIENT_GAS]: 'Insufficient gas',
+  [ERROR_CODES.GAS_PRICE_TOO_LOW]: 'Gas price too low',
+  [ERROR_CODES.GAS_LIMIT_EXCEEDED]: 'Gas limit exceeded',
+  [ERROR_CODES.NONCE_TOO_LOW]: 'Nonce too low',
+  [ERROR_CODES.NONCE_TOO_HIGH]: 'Nonce too high',
+  [ERROR_CODES.CHAIN_ID_MISMATCH]: 'Chain ID mismatch',
+  [ERROR_CODES.NETWORK_NOT_SUPPORTED]: 'Network not supported',
+  [ERROR_CODES.CONTRACT_ERROR]: 'Smart contract error',
+  [ERROR_CODES.WALLET_NOT_CONNECTED]: 'Wallet not connected',
+  [ERROR_CODES.WALLET_CHAIN_MISMATCH]: 'Wallet chain mismatch',
+  [ERROR_CODES.WALLET_REJECTED]: 'Wallet request rejected by user',
+  [ERROR_CODES.RPC_ERROR]: 'RPC error',
+  [ERROR_CODES.BLOCK_NOT_FOUND]: 'Block not found',
+  
+  [ERROR_CODES.NETWORK_ERROR]: 'Network error occurred',
+  [ERROR_CODES.CONNECTION_ERROR]: 'Connection error',
+  [ERROR_CODES.TIMEOUT]: 'Request timeout',
+  [ERROR_CODES.REQUEST_TIMEOUT]: 'Request timeout',
+  [ERROR_CODES.RESPONSE_TIMEOUT]: 'Response timeout',
+  [ERROR_CODES.DNS_ERROR]: 'DNS error',
+  [ERROR_CODES.SSL_ERROR]: 'SSL error',
+  [ERROR_CODES.CERTIFICATE_ERROR]: 'Certificate error',
+  [ERROR_CODES.CONNECTION_REFUSED]: 'Connection refused',
+  [ERROR_CODES.CONNECTION_RESET]: 'Connection reset',
+  [ERROR_CODES.NO_INTERNET]: 'No internet connection',
+  [ERROR_CODES.RATE_LIMIT_EXCEEDED]: 'Rate limit exceeded',
+  [ERROR_CODES.TOO_MANY_REQUESTS]: 'Too many requests',
+  
+  [ERROR_CODES.RATE_LIMIT_ERROR]: 'Rate limit error',
+  [ERROR_CODES.RATE_LIMIT_QUOTA_EXCEEDED]: 'Rate limit quota exceeded',
+  [ERROR_CODES.RATE_LIMIT_RESET_REQUIRED]: 'Rate limit reset required',
+  
+  [ERROR_CODES.CIRCUIT_BREAKER_ERROR]: 'Circuit breaker error',
+  [ERROR_CODES.CIRCUIT_BREAKER_OPEN]: 'Circuit breaker is open',
+  [ERROR_CODES.CIRCUIT_BREAKER_HALF_OPEN]: 'Circuit breaker is half-open',
+  [ERROR_CODES.CIRCUIT_BREAKER_FUSED]: 'Circuit breaker is fused',
+  
+  [ERROR_CODES.CACHE_ERROR]: 'Cache error',
+  [ERROR_CODES.CACHE_MISS]: 'Cache miss',
+  [ERROR_CODES.CACHE_EXPIRED]: 'Cache expired',
+  [ERROR_CODES.CACHE_LOCKED]: 'Cache locked',
+  [ERROR_CODES.CACHE_OVERFLOW]: 'Cache overflow',
+  
+  [ERROR_CODES.CONFIGURATION_ERROR]: 'Configuration error',
+  [ERROR_CODES.INVALID_CONFIGURATION]: 'Invalid configuration',
+  [ERROR_CODES.MISSING_CONFIGURATION]: 'Missing configuration',
+  [ERROR_CODES.INVALID_ENVIRONMENT]: 'Invalid environment',
+  [ERROR_CODES.SECRET_MISSING]: 'Secret is missing',
+  
+  [ERROR_CODES.DATA_ERROR]: 'Data error',
+  [ERROR_CODES.DATA_NOT_FOUND]: 'Data not found',
+  [ERROR_CODES.DATA_CORRUPTED]: 'Data corrupted',
+  [ERROR_CODES.DATA_MIGRATION_REQUIRED]: 'Data migration required',
+  [ERROR_CODES.DATA_CONSTRAINT_VIOLATION]: 'Data constraint violation',
+  
+  [ERROR_CODES.EXTERNAL_SERVICE_ERROR]: 'External service error',
+  [ERROR_CODES.THIRD_PARTY_ERROR]: 'Third-party service error',
+  [ERROR_CODES.API_ERROR]: 'API error',
+  [ERROR_CODES.SERVICE_DOWN]: 'Service is down',
+  [ERROR_CODES.SERVICE_TIMEOUT]: 'Service timeout',
+  [ERROR_CODES.WEBHOOK_ERROR]: 'Webhook error',
+  
+  [ERROR_CODES.BUSINESS_LOGIC_ERROR]: 'Business logic error',
+  [ERROR_CODES.BUSINESS_RULE_VIOLATION]: 'Business rule violation',
+  [ERROR_CODES.INVALID_OPERATION]: 'Invalid operation',
+  [ERROR_CODES.OPERATION_NOT_ALLOWED]: 'Operation not allowed',
+  [ERROR_CODES.STATE_INVALID]: 'Invalid state',
+  [ERROR_CODES.TRANSITION_INVALID]: 'Invalid state transition',
+  
+  [ERROR_CODES.SECURITY_ERROR]: 'Security error',
+  [ERROR_CODES.FRAUD_DETECTED]: 'Fraud detected',
+  [ERROR_CODES.SUSPICIOUS_ACTIVITY]: 'Suspicious activity detected',
+  [ERROR_CODES.IP_BLOCKED]: 'IP address blocked',
+  [ERROR_CODES.ACCOUNT_HACKED]: 'Account compromised',
+  [ERROR_CODES.PHISHING_DETECTED]: 'Phishing attempt detected',
+  [ERROR_CODES.MALWARE_DETECTED]: 'Malware detected',
+  [ERROR_CODES.CSRF_ERROR]: 'CSRF token error',
+  [ERROR_CODES.XSS_ERROR]: 'XSS attack detected',
+  [ERROR_CODES.SQL_INJECTION_ERROR]: 'SQL injection detected',
+  
+  [ERROR_CODES.COMPLIANCE_ERROR]: 'Compliance error',
+  [ERROR_CODES.KYC_REQUIRED]: 'KYC verification required',
+  [ERROR_CODES.AML_CHECK_FAILED]: 'AML check failed',
+  [ERROR_CODES.SANCTIONS_CHECK_FAILED]: 'Sanctions check failed',
+  [ERROR_CODES.GDPR_VIOLATION]: 'GDPR violation',
+  [ERROR_CODES.REGULATORY_VIOLATION]: 'Regulatory violation',
+  
+  [ERROR_CODES.ANALYTICS_ERROR]: 'Analytics error',
+  [ERROR_CODES.INVALID_METRIC]: 'Invalid metric',
+  [ERROR_CODES.INVALID_DIMENSION]: 'Invalid dimension',
+  [ERROR_CODES.INVALID_DATE_RANGE]: 'Invalid date range',
+  [ERROR_CODES.QUERY_INVALID]: 'Invalid query',
+  [ERROR_CODES.REPORT_GENERATION_FAILED]: 'Report generation failed',
+  
+  [ERROR_CODES.FILE_ERROR]: 'File error',
+  [ERROR_CODES.FILE_NOT_FOUND]: 'File not found',
+  [ERROR_CODES.FILE_TOO_LARGE]: 'File too large',
+  [ERROR_CODES.INVALID_FILE_TYPE]: 'Invalid file type',
+  [ERROR_CODES.UPLOAD_FAILED]: 'File upload failed',
+  [ERROR_CODES.DOWNLOAD_FAILED]: 'File download failed',
+  [ERROR_CODES.FILE_CORRUPTED]: 'File corrupted',
+  
+  [ERROR_CODES.PROVIDER_ERROR]: 'Provider error',
+  [ERROR_CODES.PROVIDER_NOT_CONFIGURED]: 'Provider not configured',
+  [ERROR_CODES.PROVIDER_CAPACITY_EXCEEDED]: 'Provider capacity exceeded',
+  [ERROR_CODES.PROVIDER_MISCONFIGURED]: 'Provider misconfigured',
+};
+
+/**
+ * HTTP status codes mapped to error codes
+ */
+export const ERROR_HTTP_STATUS: Record<string, number> = {
+  [ERROR_CODES.UNKNOWN_ERROR]: 500,
+  [ERROR_CODES.INTERNAL_ERROR]: 500,
+  [ERROR_CODES.NOT_IMPLEMENTED]: 501,
+  [ERROR_CODES.SERVICE_UNAVAILABLE]: 503,
+  
+  [ERROR_CODES.VALIDATION_ERROR]: 400,
+  [ERROR_CODES.INVALID_INPUT]: 400,
+  [ERROR_CODES.NOT_FOUND]: 404,
+  [ERROR_CODES.RESOURCE_ALREADY_EXISTS]: 409,
+  
+  [ERROR_CODES.AUTHENTICATION_ERROR]: 401,
+  [ERROR_CODES.UNAUTHORIZED]: 401,
+  [ERROR_CODES.AUTHORIZATION_ERROR]: 403,
+  [ERROR_CODES.FORBIDDEN]: 403,
+  
+  [ERROR_CODES.PAYMENT_FAILED]: 402,
+  [ERROR_CODES.INSUFFICIENT_FUNDS]: 402,
+  
+  [ERROR_CODES.TIMEOUT]: 504,
+  [ERROR_CODES.REQUEST_TIMEOUT]: 408,
+  [ERROR_CODES.RATE_LIMIT_EXCEEDED]: 429,
+  [ERROR_CODES.TOO_MANY_REQUESTS]: 429,
+};
+
+/**
+ * Error categories
+ */
+export const ERROR_CATEGORIES = {
+  CLIENT: 'client',       // 4xx errors
+  SERVER: 'server',       // 5xx errors
+  NETWORK: 'network',     // Network errors
+  BLOCKCHAIN: 'blockchain', // Blockchain errors
+  BUSINESS: 'business',   // Business logic errors
+  SECURITY: 'security',  // Security errors
+  COMPLIANCE: 'compliance', // Compliance errors
+} as const;
+
+export type ErrorCode = typeof ERROR_CODES[keyof typeof ERROR_CODES];
+export type ErrorCategory = typeof ERROR_CATEGORIES[keyof typeof ERROR_CATEGORIES];

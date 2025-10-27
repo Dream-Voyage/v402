@@ -4,6 +4,17 @@
 
 The v402 Facilitator is an enterprise-grade payment facilitation service that implements the x402 protocol for content monetization. It provides comprehensive APIs for content providers, index clients, and system administrators.
 
+### 🔑 v402 Auth 3.0: Cryptographic Identity & Usage-Based Payments
+
+v402 uses a revolutionary authentication and billing system:
+
+1. **Public Key as Credential**: Your blockchain public key (e.g., `0x1234...`) is your identity - no centralized API keys
+2. **x402 Payment Tokens for Usage**: Every API call is paid for using x402 payment tokens on-chain
+3. **On-Chain Accounting**: All transactions are recorded on blockchain for transparent, verifiable billing
+4. **No Points Balance**: Unlike traditional systems, there's no stored "balance" - payments are made on-demand
+
+This enables **trustless, composable API monetization** where usage itself becomes a tokenized asset.
+
 ### 🚀 Key Features
 
 - **Multi-chain Support**: Ethereum, Base, Polygon, Arbitrum, Optimism, BSC, Solana
@@ -21,25 +32,34 @@ Staging:     https://staging-facilitator.v402.network/api/v1
 Development: http://localhost:8080/api/v1
 ```
 
-## 🔐 Authentication
+## 🔐 Authentication - v402 Auth 3.0
 
-The v402 Facilitator supports multiple authentication methods:
+The v402 Facilitator implements cryptographic authentication using **public keys** instead of traditional API keys:
 
-### API Key Authentication
+### Public Key Authentication
 
-Include your API key in the request header:
-
-```http
-Authorization: Bearer v402_your_api_key_here
-```
-
-### JWT Token Authentication
-
-For user-specific operations:
+Your blockchain public key serves as your credential. Include it in requests:
 
 ```http
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Authorization: Bearer <your_public_key>
+X-Public-Key: 0x1234567890abcdef1234567890abcdef12345678
+X-Signature: <cryptographic_signature>
 ```
+
+### How It Works
+
+1. **Generate a key pair** using your blockchain wallet (Ethereum, Solana, etc.)
+2. **Use your public key** as your identifier
+3. **Sign requests** with your private key for authentication
+4. **All usage is paid** via x402 payment tokens, not stored points
+
+### x402 Payment Tokens
+
+Usage credits are represented as **x402 payment tokens** - on-chain payment proofs that can be verified:
+- No centralized point system
+- Payments recorded on-chain
+- Fully composable and transferable
+- Tamper-proof accounting
 
 ### x402 Payment Headers
 
@@ -71,7 +91,7 @@ X-PAYMENT: v402.1.0:signature:payload:metadata
 ```http
 POST /providers/products
 Content-Type: application/json
-Authorization: Bearer {api_key}
+Authorization: Bearer {public_key}
 
 {
   "title": "Premium AI Tutorial Series",
@@ -109,7 +129,7 @@ Authorization: Bearer {api_key}
 
 ```http
 GET /providers/products?page=1&size=20&status=active&category=education&sort_by=created_at&sort_order=desc
-Authorization: Bearer {api_key}
+Authorization: Bearer {public_key}
 ```
 
 **Response:**
@@ -138,7 +158,7 @@ Authorization: Bearer {api_key}
 
 ```http
 PUT /providers/products/{product_id}
-Authorization: Bearer {api_key}
+Authorization: Bearer {public_key}
 
 {
   "title": "Advanced AI Tutorial Series - Updated",
@@ -151,7 +171,7 @@ Authorization: Bearer {api_key}
 
 ```http
 POST /providers/products/{product_id}/publish
-Authorization: Bearer {api_key}
+Authorization: Bearer {public_key}
 ```
 
 ### 📊 Analytics & Insights
@@ -160,7 +180,7 @@ Authorization: Bearer {api_key}
 
 ```http
 GET /providers/products/{product_id}/analytics?start_date=2024-01-01&end_date=2024-01-31&group_by=day
-Authorization: Bearer {api_key}
+Authorization: Bearer {public_key}
 ```
 
 **Response:**
@@ -190,7 +210,7 @@ Authorization: Bearer {api_key}
 
 ```http
 GET /providers/analytics/dashboard?days=30
-Authorization: Bearer {api_key}
+Authorization: Bearer {public_key}
 ```
 
 **Response:**
@@ -229,7 +249,7 @@ Authorization: Bearer {api_key}
 
 ```http
 GET /providers/analytics/revenue?start_date=2024-01-01&end_date=2024-01-31&group_by=week
-Authorization: Bearer {api_key}
+Authorization: Bearer {public_key}
 ```
 
 ### 🔍 Access Logs & Unpaid Requests
@@ -238,7 +258,7 @@ Authorization: Bearer {api_key}
 
 ```http
 GET /providers/access-logs?page=1&size=50&unpaid_only=true&start_date=2024-01-15T00:00:00Z
-Authorization: Bearer {api_key}
+Authorization: Bearer {public_key}
 ```
 
 **Response:**
@@ -267,7 +287,7 @@ Authorization: Bearer {api_key}
 
 ```http
 GET /providers/unpaid-requests?hours=24&min_requests=3
-Authorization: Bearer {api_key}
+Authorization: Bearer {public_key}
 ```
 
 **Response:**
@@ -305,7 +325,7 @@ Authorization: Bearer {api_key}
 
 ```http
 GET /providers/payments?page=1&size=50&status=confirmed&chain=ethereum&start_date=2024-01-01
-Authorization: Bearer {api_key}
+Authorization: Bearer {public_key}
 ```
 
 **Response:**
@@ -337,14 +357,14 @@ Authorization: Bearer {api_key}
 
 ```http
 GET /providers/webhooks
-Authorization: Bearer {api_key}
+Authorization: Bearer {public_key}
 ```
 
 #### Create Webhook
 
 ```http
 POST /providers/webhooks
-Authorization: Bearer {api_key}
+Authorization: Bearer {public_key}
 
 {
   "url": "https://yourapp.com/webhooks/v402",
@@ -359,14 +379,14 @@ Authorization: Bearer {api_key}
 
 ```http
 GET /providers/insights/top-products?period=30d&metric=revenue&limit=10
-Authorization: Bearer {api_key}
+Authorization: Bearer {public_key}
 ```
 
 #### Business Recommendations
 
 ```http
 GET /providers/insights/recommendations
-Authorization: Bearer {api_key}
+Authorization: Bearer {public_key}
 ```
 
 **Response:**
@@ -633,7 +653,7 @@ Content-Type: application/json
 
 {
   "reason": "Insufficient funds",
-  "error_code": "INSUFFICIENT_BALANCE"
+  "error_code": "INSUFFICIENT_PAYMENT_TOKENS"
 }
 ```
 
@@ -718,7 +738,7 @@ Authorization: Bearer {admin_token}
 }
 ```
 
-#### Reset User API Key
+#### Reset User Public Key
 
 ```http
 POST /admin/users/{user_id}/reset-api-key
@@ -985,7 +1005,7 @@ Standard error response format:
 const product = await fetch('/api/v1/providers/products', {
   method: 'POST',
   headers: {
-    'Authorization': 'Bearer v402_your_api_key',
+    'Authorization': 'Bearer your_public_key_here',
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
@@ -1013,9 +1033,9 @@ const unpaidRequests = await fetch('/api/v1/providers/unpaid-requests?hours=24',
 import httpx
 
 class V402Client:
-    def __init__(self, base_url, api_key=None):
+    def __init__(self, base_url, public_key=None):
         self.base_url = base_url
-        self.headers = {'Authorization': f'Bearer {api_key}'} if api_key else {}
+        self.headers = {'Authorization': f'Bearer {public_key}'} if public_key else {}
     
     async def discover_content(self, query, category=None, price_range=None):
         params = {'query': query}
@@ -1100,7 +1120,7 @@ app.post('/webhooks/v402', express.raw({type: 'application/json'}), (req, res) =
 ## 🚀 Getting Started
 
 1. **Register Account**: Sign up at https://facilitator.v402.network
-2. **Generate API Key**: Create API key in dashboard
+2. **Generate Key Pair**: Create blockchain key pair (use your wallet's public key)
 3. **Test Integration**: Use staging environment first
 4. **Configure Webhooks**: Set up real-time notifications
 5. **Go Live**: Switch to production environment

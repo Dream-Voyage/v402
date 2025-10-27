@@ -1,0 +1,362 @@
+{
+  "name": "@v402/providers",
+  "version": "1.0.0",
+  "description": "Advanced JavaScript/TypeScript provider SDK for v402 content monetization protocol with comprehensive enterprise-grade features",
+  "keywords": [
+    "v402",
+    "x402",
+    "payment",
+    "micropayment",
+    "blockchain",
+    "web3",
+    "content-monetization",
+    "react",
+    "vue",
+    "angular",
+    "svelte",
+    "web-components",
+    "typescript",
+    "enterprise",
+    "sdk",
+    "fintech",
+    "defi",
+    "ugc",
+    "creator-economy"
+  ],
+  "author": "v402 Team <team@v402.network>",
+  "license": "MIT",
+  "homepage": "https://github.com/v402/providers-js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/v402/providers-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/v402/providers-js/issues"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "v402-provider": "dist/cli.js",
+    "v402p": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "src",
+    "config",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./react": {
+      "import": "./dist/integrations/react.esm.js",
+      "require": "./dist/integrations/react.js",
+      "types": "./dist/integrations/react.d.ts"
+    },
+    "./vue": {
+      "import": "./dist/integrations/vue.esm.js",
+      "require": "./dist/integrations/vue.js",
+      "types": "./dist/integrations/vue.d.ts"
+    },
+    "./angular": {
+      "import": "./dist/integrations/angular.esm.js",
+      "require": "./dist/integrations/angular.js",
+      "types": "./dist/integrations/angular.d.ts"
+    },
+    "./svelte": {
+      "import": "./dist/integrations/svelte.esm.js",
+      "require": "./dist/integrations/svelte.js",
+      "types": "./dist/integrations/svelte.d.ts"
+    },
+    "./vanilla": {
+      "import": "./dist/integrations/vanilla.esm.js",
+      "require": "./dist/integrations/vanilla.js",
+      "types": "./dist/integrations/vanilla.d.ts"
+    },
+    "./web-components": {
+      "import": "./dist/components/web-components.esm.js",
+      "require": "./dist/components/web-components.js",
+      "types": "./dist/components/web-components.d.ts"
+    },
+    "./workers": {
+      "import": "./dist/workers/index.esm.js",
+      "require": "./dist/workers/index.js",
+      "types": "./dist/workers/index.d.ts"
+    },
+    "./plugins": {
+      "import": "./dist/plugins/index.esm.js",
+      "require": "./dist/plugins/index.js",
+      "types": "./dist/plugins/index.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "vite --mode development",
+    "dev:prod": "vite --mode production",
+    "dev:staging": "vite --mode staging",
+    "build": "npm run build:clean && npm run build:types && npm run build:bundle && npm run build:workers",
+    "build:clean": "rimraf dist coverage .nyc_output",
+    "build:types": "tsc --project tsconfig.build.json",
+    "build:bundle": "rollup -c rollup.config.js",
+    "build:workers": "webpack --config webpack.workers.config.js",
+    "build:watch": "rollup -c rollup.config.js --watch",
+    "build:analyze": "npm run build && webpack-bundle-analyzer dist/stats.json",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "test:integration": "playwright test",
+    "test:e2e": "cypress run",
+    "test:performance": "lighthouse-ci autorun",
+    "test:security": "npm audit && snyk test",
+    "lint": "eslint src --ext .ts,.tsx,.js,.jsx,.vue --max-warnings 0",
+    "lint:fix": "eslint src --ext .ts,.tsx,.js,.jsx,.vue --fix",
+    "lint:staged": "lint-staged",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,vue,css,scss,md,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,vue,css,scss,md,json}\"",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "tsc --noEmit --watch",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=PROJECT_TOKEN",
+    "size": "size-limit",
+    "size:analyze": "size-limit --why",
+    "benchmark": "node scripts/benchmark.js",
+    "benchmark:memory": "clinic doctor -- node scripts/benchmark.js",
+    "benchmark:flame": "clinic flame -- node scripts/benchmark.js",
+    "docs": "typedoc --out docs src/index.ts",
+    "docs:serve": "serve docs -p 3001",
+    "release": "standard-version && npm publish",
+    "release:alpha": "standard-version --prerelease alpha && npm publish --tag alpha",
+    "release:beta": "standard-version --prerelease beta && npm publish --tag beta",
+    "precommit": "lint-staged && npm run type-check",
+    "prepush": "npm run test && npm run build",
+    "prepare": "husky install",
+    "postinstall": "node scripts/postinstall.js",
+    "cli": "node dist/cli.js",
+    "dev:cli": "ts-node src/cli/index.ts",
+    "validate": "npm run lint && npm run type-check && npm run test",
+    "clean": "rimraf dist coverage .nyc_output node_modules/.cache",
+    "reset": "npm run clean && rm -rf node_modules package-lock.json && npm install",
+    "check-updates": "ncu -u",
+    "security": "npm audit --audit-level moderate",
+    "outdated": "npm outdated"
+  },
+  "dependencies": {
+    "@ethersproject/abi": "^5.7.0",
+    "@ethersproject/contracts": "^5.7.0",
+    "@ethersproject/providers": "^5.7.2",
+    "@ethersproject/wallet": "^5.7.0",
+    "@solana/web3.js": "^1.87.6",
+    "@solana/wallet-adapter-base": "^0.9.23",
+    "axios": "^1.6.2",
+    "ethers": "^6.9.0",
+    "web3": "^4.3.0",
+    "web3-utils": "^4.0.7",
+    "eventemitter3": "^5.0.1",
+    "rxjs": "^7.8.1",
+    "uuid": "^9.0.1",
+    "decimal.js": "^10.4.3",
+    "big.js": "^6.2.1",
+    "lodash-es": "^4.17.21",
+    "date-fns": "^2.30.0",
+    "zod": "^3.22.4",
+    "qs": "^6.11.2",
+    "cross-fetch": "^4.0.0",
+    "abort-controller": "^3.0.0",
+    "p-retry": "^6.2.0",
+    "p-queue": "^8.0.1",
+    "p-debounce": "^4.0.0",
+    "p-throttle": "^6.1.0",
+    "lru-cache": "^10.1.0",
+    "idb": "^7.1.1",
+    "comlink": "^4.4.1",
+    "workbox-core": "^7.0.0",
+    "workbox-strategies": "^7.0.0"
+  },
+  "devDependencies": {
+    "@angular/core": "^17.0.6",
+    "@angular/common": "^17.0.6",
+    "@rollup/plugin-alias": "^5.1.0",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-json": "^6.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-replace": "^5.0.5",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@size-limit/preset-small-lib": "^11.0.1",
+    "@storybook/addon-actions": "^7.6.6",
+    "@storybook/addon-docs": "^7.6.6",
+    "@storybook/addon-essentials": "^7.6.6",
+    "@storybook/addon-interactions": "^7.6.6",
+    "@storybook/addon-links": "^7.6.6",
+    "@storybook/addon-viewport": "^7.6.6",
+    "@storybook/addon-a11y": "^7.6.6",
+    "@storybook/blocks": "^7.6.6",
+    "@storybook/react": "^7.6.6",
+    "@storybook/react-vite": "^7.6.6",
+    "@storybook/vue3": "^7.6.6",
+    "@storybook/vue3-vite": "^7.6.6",
+    "@storybook/web-components": "^7.6.6",
+    "@storybook/web-components-vite": "^7.6.6",
+    "@testing-library/dom": "^9.3.4",
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/user-event": "^14.5.1",
+    "@testing-library/vue": "^8.0.1",
+    "@types/big.js": "^6.2.0",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^20.10.4",
+    "@types/qs": "^6.9.10",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.17",
+    "@types/uuid": "^9.0.7",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "@vitejs/plugin-react": "^4.2.0",
+    "@vitejs/plugin-vue": "^4.5.2",
+    "@vitest/coverage-c8": "^0.33.0",
+    "@vitest/coverage-v8": "^1.0.4",
+    "@vitest/ui": "^1.0.4",
+    "@vue/compiler-sfc": "^3.3.11",
+    "@vue/test-utils": "^2.4.3",
+    "@webcomponents/custom-elements": "^1.6.0",
+    "autoprefixer": "^10.4.16",
+    "chromatic": "^10.1.0",
+    "clinic": "^13.0.0",
+    "cypress": "^13.6.1",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-storybook": "^0.6.15",
+    "eslint-plugin-vue": "^9.18.1",
+    "happy-dom": "^12.10.3",
+    "husky": "^8.0.3",
+    "lighthouse-ci": "^0.12.0",
+    "lint-staged": "^15.2.0",
+    "lit": "^3.1.0",
+    "npm-check-updates": "^16.14.12",
+    "playwright": "^1.40.1",
+    "postcss": "^8.4.32",
+    "prettier": "^3.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rimraf": "^5.0.5",
+    "rollup": "^4.6.1",
+    "rollup-plugin-analyzer": "^4.0.0",
+    "rollup-plugin-visualizer": "^5.12.0",
+    "sass": "^1.69.7",
+    "serve": "^14.2.1",
+    "size-limit": "^11.0.1",
+    "snyk": "^1.1266.0",
+    "standard-version": "^9.5.0",
+    "storybook": "^7.6.6",
+    "svelte": "^4.2.8",
+    "tailwindcss": "^3.3.6",
+    "ts-node": "^10.9.1",
+    "typedoc": "^0.25.4",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.7",
+    "vite-plugin-dts": "^3.6.4",
+    "vitest": "^1.0.4",
+    "vue": "^3.3.11",
+    "webpack": "^5.89.0",
+    "webpack-bundle-analyzer": "^4.10.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+    "vue": ">=3.0.0",
+    "@angular/core": ">=15.0.0",
+    "svelte": ">=4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    },
+    "@angular/core": {
+      "optional": true
+    },
+    "svelte": {
+      "optional": true
+    }
+  },
+  "size-limit": [
+    {
+      "name": "Core SDK",
+      "path": "dist/index.js",
+      "limit": "100 KB"
+    },
+    {
+      "name": "React Integration",
+      "path": "dist/integrations/react.js",
+      "limit": "50 KB"
+    },
+    {
+      "name": "Vue Integration",
+      "path": "dist/integrations/vue.js",
+      "limit": "50 KB"
+    },
+    {
+      "name": "Angular Integration",
+      "path": "dist/integrations/angular.js",
+      "limit": "60 KB"
+    },
+    {
+      "name": "Svelte Integration",
+      "path": "dist/integrations/svelte.js",
+      "limit": "40 KB"
+    },
+    {
+      "name": "Web Components",
+      "path": "dist/components/web-components.js",
+      "limit": "70 KB"
+    }
+  ],
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11",
+    "not op_mini all"
+  ],
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,vue}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,scss,md,json}": [
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run validate"
+    }
+  },
+  "volta": {
+    "node": "18.19.0",
+    "npm": "10.2.3"
+  }
+}
