@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V402 Payment Button - Web Component Example</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .example-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .example-title {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .code-example {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        
+        .usage-note {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .usage-note h4 {
+            margin: 0 0 10px 0;
+            color: #0066cc;
+        }
+        
+        .usage-note p {
+            margin: 0;
+            color: #0066cc;
+        }
+        
+        .event-log {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .event-log h4 {
+            margin: 0 0 15px 0;
+            color: #333;
+        }
+        
+        .event-item {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 12px;
+        }
+        
+        .event-item.success {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+        
+        .event-item.error {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+        
+        .clear-events {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .clear-events:hover {
+            background: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>V402 Payment Button</h1>
+            <p>Web Component Integration Example</p>
+        </div>
+        
+        <div class="example-section">
+            <h2 class="example-title">Basic Usage</h2>
+            <p class="example-description">
+                The V402 Payment Button is a custom web component that can be easily integrated into any web application.
+                It provides a complete payment interface for v402 protocol products.
+            </p>
+            
+            <div class="code-example">
+                <pre>&lt;v402-payment-button
+    product-id="product-123"
+    api-url="https://api.v402.network"
+    public-key="0x1234567890abcdef1234567890abcdef12345678"
+    private-key="0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890"
+&gt;&lt;/v402-payment-button&gt;</pre>
+            </div>
+            
+            <div class="usage-note">
+                <h4>Note:</h4>
+                <p>In a real application, you would use actual product IDs and cryptographic keys. This example uses mock data for demonstration purposes.</p>
+            </div>
+        </div>
+        
+        <div class="example-section">
+            <h2 class="example-title">Live Example</h2>
+            <p class="example-description">
+                Here's a working example of the V402 Payment Button component:
+            </p>
+            
+            <!-- V402 Payment Button Component -->
+            <v402-payment-button
+                product-id="product-123"
+                api-url="https://api.v402.network"
+                public-key="0x1234567890abcdef1234567890abcdef12345678"
+                private-key="0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890"
+            ></v402-payment-button>
+        </div>
+        
+        <div class="example-section">
+            <h2 class="example-title">Event Handling</h2>
+            <p class="example-description">
+                The component dispatches custom events that you can listen to:
+            </p>
+            
+            <div class="code-example">
+                <pre>const paymentButton = document.querySelector('v402-payment-button');
+
+paymentButton.addEventListener('payment-success', (event) => {
+    console.log('Payment successful:', event.detail);
+    // Handle successful payment
+});
+
+paymentButton.addEventListener('payment-error', (event) => {
+    console.log('Payment failed:', event.detail);
+    // Handle payment error
+});</pre>
+            </div>
+            
+            <div class="event-log">
+                <h4>Event Log</h4>
+                <div id="event-log-content">
+                    <div class="event-item">Waiting for events...</div>
+                </div>
+                <button class="clear-events" onclick="clearEventLog()">Clear Events</button>
+            </div>
+        </div>
+        
+        <div class="example-section">
+            <h2 class="example-title">Advanced Configuration</h2>
+            <p class="example-description">
+                The component supports various configuration options:
+            </p>
+            
+            <div class="code-example">
+                <pre>&lt;v402-payment-button
+    product-id="product-123"
+    api-url="https://api.v402.network"
+    public-key="0x1234567890abcdef1234567890abcdef12345678"
+    private-key="0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890"
+    theme="dark"
+    currency="USDC"
+    auto-check-access="true"
+&gt;&lt;/v402-payment-button&gt;</pre>
+            </div>
+        </div>
+        
+        <div class="example-section">
+            <h2 class="example-title">Integration with Frameworks</h2>
+            <p class="example-description">
+                The web component can be used with any framework or vanilla JavaScript:
+            </p>
+            
+            <div class="code-example">
+                <pre>// React
+function PaymentPage() {
+    const handlePaymentSuccess = (event) => {
+        console.log('Payment successful:', event.detail);
+    };
+    
+    return (
+        &lt;v402-payment-button
+            product-id="product-123"
+            onPaymentSuccess={handlePaymentSuccess}
+        /&gt;
+    );
+}
+
+// Vue
+&lt;template&gt;
+    &lt;v402-payment-button
+        product-id="product-123"
+        @payment-success="handlePaymentSuccess"
+    /&gt;
+&lt;/template&gt;
+
+// Angular
+&lt;v402-payment-button
+    product-id="product-123"
+    (payment-success)="handlePaymentSuccess($event)"
+&gt;&lt;/v402-payment-button&gt;</pre>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Load the V402 Payment Button Web Component -->
+    <script type="module" src="./V402PaymentButton.js"></script>
+    
+    <script>
+        // Event logging functionality
+        const eventLogContent = document.getElementById('event-log-content');
+        
+        function logEvent(type, detail) {
+            const eventItem = document.createElement('div');
+            eventItem.className = `event-item ${type === 'success' ? 'success' : 'error'}`;
+            
+            const timestamp = new Date().toLocaleTimeString();
+            eventItem.textContent = `[${timestamp}] ${type.toUpperCase()}: ${JSON.stringify(detail, null, 2)}`;
+            
+            eventLogContent.insertBefore(eventItem, eventLogContent.firstChild);
+            
+            // Keep only the last 10 events
+            while (eventLogContent.children.length > 10) {
+                eventLogContent.removeChild(eventLogContent.lastChild);
+            }
+        }
+        
+        function clearEventLog() {
+            eventLogContent.innerHTML = '<div class="event-item">Event log cleared...</div>';
+        }
+        
+        // Listen for events from the payment button
+        document.addEventListener('DOMContentLoaded', () => {
+            const paymentButton = document.querySelector('v402-payment-button');
+            
+            if (paymentButton) {
+                paymentButton.addEventListener('payment-success', (event) => {
+                    logEvent('success', event.detail);
+                });
+                
+                paymentButton.addEventListener('payment-error', (event) => {
+                    logEvent('error', event.detail);
+                });
+            }
+        });
+        
+        // Mock product data for demonstration
+        window.mockProductData = {
+            id: 'product-123',
+            title: 'Advanced Web Development Course',
+            description: 'Learn advanced web development techniques including modern frameworks, performance optimization, and best practices.',
+            price: '99.00',
+            currency: 'USDC',
+            content_url: 'https://example.com/course/web-development',
+            category: 'education',
+            tags: ['web-development', 'javascript', 'react', 'vue'],
+            author: 'Web Dev Expert',
+            status: 'active',
+            view_count: 1250,
+            purchase_count: 45,
+            created_at: '2024-01-01T00:00:00Z',
+            updated_at: '2024-01-15T10:30:00Z'
+        };
+    </script>
+</body>
+</html>
