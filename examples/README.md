@@ -6,37 +6,25 @@ This directory contains comprehensive examples demonstrating how to use the v402
 
 ```
 examples/
-├── python/                 # Python SDK examples
-│   ├── basic_client.py     # Simple payment client
-│   ├── batch_processing.py # Batch URL processing
-│   ├── django_integration/ # Django web app example
-│   └── fastapi_provider/   # FastAPI content provider
-├── go/                     # Go SDK examples  
-│   ├── basic_client.go     # Simple Go client
-│   ├── concurrent_batch.go # High-performance batch processing
-│   └── gin_provider/       # Gin web server provider
-├── java/                   # Java SDK examples
-│   ├── SpringBootApp.java  # Spring Boot integration
-│   ├── BasicClient.java    # Simple Java client
-│   └── reactive_streams/   # Reactive programming example
-├── rust/                   # Rust SDK examples
-│   ├── basic_client.rs     # Basic async client
-│   ├── high_performance.rs # Performance-optimized client
-│   └── tokio_server/       # Tokio-based provider server
-├── javascript/             # JavaScript Provider examples
-│   ├── vanilla/            # Pure JavaScript integration
-│   ├── react/              # React component examples
-│   ├── vue/                # Vue.js integration
-│   ├── nextjs/             # Next.js full-stack app
-│   └── web-components/     # Web Components examples
-├── end_to_end/             # Complete integration examples
-│   ├── blog_platform/      # Full blog platform with payments
-│   ├── api_marketplace/    # API marketplace example
-│   └── content_paywall/    # Content paywall system
-└── docker/                 # Docker deployment examples
-    ├── development/        # Development environment
-    ├── production/         # Production deployment
-    └── microservices/      # Microservices architecture
+├── python/                 # Python examples
+│   ├── basic/             # Basic client examples
+│   ├── batch/             # Batch processing examples
+│   ├── advanced/          # Advanced features
+│   └── integrations/      # Framework integrations
+├── go/                     # Go examples  
+│   ├── basic/             # Basic Go client
+│   └── concurrent/        # Concurrent processing
+├── javascript/             # JavaScript/TypeScript examples
+│   ├── vanilla/           # Pure JavaScript
+│   ├── react/             # React components
+│   ├── vue/               # Vue.js integration
+│   ├── nextjs/            # Next.js examples
+│   └── web-components/    # Web Components
+├── rust/                   # Rust examples
+│   └── basic/             # Basic async client
+├── index_client_example/  # Index client examples
+├── end_to_end_example/    # Complete integration
+└── facilitator_example/   # Facilitator usage
 ```
 
 ## 🚀 Quick Start Examples

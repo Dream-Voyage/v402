@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v402 Simple Integration Example</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .content-card {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .premium-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .paywall {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 20px 0;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-card">
+        <h1>📚 Premium Article</h1>
+        <p class="preview">This article contains premium content. Click "Unlock" to access the full article.</p>
+    </div>
+
+    <div class="paywall" id="paywall">
+        <h2>🔒 Unlock Premium Content</h2>
+        <p>This article costs <strong>0.001 ETH</strong> to unlock.</p>
+        <p>You'll be redirected to complete the payment using v402 protocol.</p>
+        
+        <button id="unlockBtn" onclick="unlockContent()">
+            🔓 Unlock Article
+        </button>
+    </div>
+
+    <div class="premium-content" id="premiumContent" style="display: none;">
+        <h2>🌟 Premium Content</h2>
+        <p>Congratulations! You've successfully unlocked this premium article.</p>
+        <p>This content is protected by v402 protocol and was paid for using x402 payment tokens on-chain.</p>
+        
+        <div class="article-body">
+            <h3>Full Article Content</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+            <p>[This is where your actual premium content would appear]</p>
+        </div>
+    </div>
+
+    <script>
+        // v402 Client Configuration
+        const v402Config = {
+            publicKey: '0x1234567890abcdef1234567890abcdef12345678',
+            facilitatorUrl: 'https://facilitator.v402.network',
+            productId: 'article-premium-123',
+            amount: '1000000000000000', // 0.001 ETH in wei
+            currency: 'ETH'
+        };
+
+        // Mock v402 payment function
+        async function initiatePayment(config) {
+            // In real implementation, this would:
+            // 1. Sign payment request with private key
+            // 2. Send signed request to v402 facilitator
+            // 3. Wait for blockchain transaction confirmation
+            // 4. Return transaction hash
+            
+            // Simulate payment processing
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    // Simulate success (90% chance)
+                    if (Math.random() > 0.1) {
+                        resolve({
+                            success: true,
+                            transactionHash: '0x' + Math.random().toString(16).substring(2, 66),
+                            amount: config.amount,
+                            status: 'confirmed'
+                        });
+                    } else {
+                        reject(new Error('Payment failed'));
+                    }
+                }, 2000);
+            });
+        }
+
+        async function unlockContent() {
+            const btn = document.getElementById('unlockBtn');
+            const paywall = document.getElementById('paywall');
+            
+            // Disable button and show loading
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> Processing...';
+            
+            try {
+                console.log('Initiating v402 payment...');
+                
+                // Initiate payment
+                const result = await initiatePayment(v402Config);
+                
+                console.log('Payment successful:', result);
+                
+                // Hide paywall
+                paywall.style.display = 'none';
+                
+                // Show premium content
+                const premiumContent = document.getElementById('premiumContent');
+                premiumContent.style.display = 'block';
+                
+                // Scroll to content
+                premiumContent.scrollIntoView({ behavior: 'smooth' });
+                
+                // Track analytics
+                if (window.gtag) {
+                    window.gtag('event', 'payment_success', {
+                        'value': v402Config.amount,
+                        'currency': v402Config.currency
+                    });
+                }
+                
+            } catch (error) {
+                console.error('Payment failed:', error);
+                
+                // Re-enable button
+                btn.disabled = false;
+                btn.innerHTML = '🔓 Unlock Article';
+                
+                // Show error
+                alert('Payment failed: ' + error.message);
+            }
+        }
+
+        // Check if wallet is connected
+        async function checkWalletConnection() {
+            if (typeof window.ethereum !== 'undefined') {
+                console.log('MetaMask is installed');
+            } else {
+                console.warn('No web3 wallet detected');
+            }
+        }
+
+        // Initialize
+        checkWalletConnection();
+    </script>
+</body>
+</html>
+

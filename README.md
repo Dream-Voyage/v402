@@ -258,13 +258,16 @@ See [Complete API Documentation](./API_DOCUMENTATION.md) for direct REST API acc
 
 ## 🎓 Examples
 
-- [Python: AI Content Crawler](./examples/python-ai-crawler/)
-- [Go: High-Performance Indexer](./examples/go-indexer/)
-- [Java: Enterprise Integration](./examples/java-enterprise/)
-- [Rust: Blockchain Indexer](./examples/rust-indexer/)
-- [React: Blog with Paywall](./examples/react-blog/)
-- [Vue: Premium Course Platform](./examples/vue-course/)
-- [End-to-End: Complete Flow](./examples/e2e/)
+Explore comprehensive examples for different use cases:
+
+- [Python Examples](./examples/python/) - Async Python client examples
+- [Go Examples](./examples/go/) - High-performance concurrent examples
+- [JavaScript/React Examples](./examples/javascript/) - React, Vue, and vanilla JS
+- [Rust Examples](./examples/rust/) - Performance-optimized examples
+- [End-to-End Example](./examples/end_to_end_example/) - Complete integration
+- [Index Client Examples](./examples/index_client_example/) - Basic and batch processing
+
+See [Examples README](./examples/README.md) for detailed documentation and usage guides.
 
 ## 🔧 Development
 
